@@ -1,8 +1,11 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import Head from 'next/head';
+
+import { useAuth } from '../lib/auth';
+import styles from '../styles/Home.module.css';
 
 export default function Home() {
+  const auth = useAuth();
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,6 +15,9 @@ export default function Home() {
       </Head>
 
       <h1>Hello, next 2025 🎉</h1>
+      <button onClick={() => auth.signinWithGithub()}>Sign with Github</button>
+      {auth?.user && <button onClick={() => auth.signout()}>Sign out</button>}
+      <pre>{JSON.stringify(auth?.user, null, 2)}</pre>
     </div>
   );
 }
